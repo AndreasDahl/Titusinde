@@ -1,4 +1,5 @@
-__author__ = 'andreasdahl'
+__author__ = 'Andreas Dahl'
+
 
 def median(mylist):
     sorts = sorted(mylist)

@@ -1,7 +1,6 @@
-__author__ = 'andreasdahl'
+__author__ = 'Andreas Dahl'
 
 import roll
-import round
 
 from math_utils import *
 

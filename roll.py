@@ -1,4 +1,8 @@
+__author__ = 'Andreas Dahl'
+
+
 import random
+
 
 def random_roll(n):
     """
@@ -8,8 +12,9 @@ def random_roll(n):
     """
     dices = []
     for i in range(0, n):
-        dices.append(random.randint(1,6))
+        dices.append(random.randint(1, 6))
     return dices
+
 
 def all_rolls():
     """
@@ -26,16 +31,18 @@ def all_rolls():
                             rolls.append([d1, d2, d3, d4, d5, d6])
     return rolls
 
+
 def simple_score(dices):
     score = 0
     for dice in dices:
-        if (dice == 1):
+        if dice == 1:
             score += 100
-        elif (dice == 5):
+        elif dice == 5:
             score += 50
     return score
 
-def pop_digit(n, combo_score, single_score = 0):
+
+def pop_digit(n, combo_score, single_score=0):
     score = 0
     # Check combo
     if n >= 3:
@@ -48,15 +55,16 @@ def pop_digit(n, combo_score, single_score = 0):
     score += n * single_score
     return score
 
+
 def highest_score(dices):
     hist = [0] * 6
     for dice in dices:
-        hist[dice-1] += 1
+        hist[dice - 1] += 1
     # Check for stair
-    if (hist.count(1) == len(hist)):
+    if hist.count(1) == len(hist):
         return 1000
     # Check for three pairs
-    if (hist.count(2) >= 3):
+    if hist.count(2) >= 3:
         return 200
 
     score = 0
