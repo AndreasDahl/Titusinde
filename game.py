@@ -1,19 +1,19 @@
 __author__ = 'Andreas Dahl'
 
-import roll
+from utils import dice_utils
+from utils.math_utils import *
 
-from math_utils import *
+# TODO: Game
 
 
-r = roll.random_roll(6)
+r = dice_utils.random_roll(6)
 print(r)
-print(roll.simple_score(r))
-print(roll.highest_score(r))
+print(dice_utils.take_all(r))
 
-ar = roll.all_rolls()
+ar = dice_utils.all_rolls()
 scores = []
 for roll in ar:
-    scores.append(roll.highest_score(roll))
+    scores.append(dice_utils.take_all(dice_utils))
 
 print(sum(scores)/len(scores))
 print(median(scores))
