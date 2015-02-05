@@ -1,3 +1,4 @@
+import logging
 from utils.dice_utils import random_roll
 
 __author__ = 'Andreas Dahl'
@@ -5,12 +6,12 @@ __author__ = 'Andreas Dahl'
 
 class GameRound(object):
     bank = 0
+    current_roll = None
     current_combo = None
     should_end = False
+    alive = False
 
     def __init__(self, strategy, game):
-        self.current_roll = random_roll(6)
-        print "Roll:", self.current_roll
         self.strategy = strategy
         self.game = game
 
@@ -18,18 +19,20 @@ class GameRound(object):
         random_roll(len(self.current_roll))
 
     def play(self):
-        score = self.strategy.handle_roll(self)
-        self.bank += score
-        print "Strategy took", score, "points. Now ", self.bank, "in bank."
+        self.current_roll = random_roll(6)
+        while True:
+            logging.info("Roll: " + str(self.current_roll))
+            score = self.strategy.handle_roll(self)
+            self.bank += score
+            logging.info("Strategy took " + str(score) + " points. Now " + str(self.bank) + " in bank.")
 
-        if score == 0:
-            self.game.end_round(0)
-        elif self.should_end:
-            self.game.end_round(self.bank)
-        else:
-            self.current_roll = random_roll(6)  # TODO
-            print "Used all dices reroll", self.current_roll
-            self.play()
+            if score == 0:
+                return 0
+            elif not self.alive:
+                return self.bank
+            else:
+                self.current_roll = random_roll(6)  # TODO
+                logging.info("Used all dices. reroll" + str(self.current_roll))
 
     def hold(self):
-        self.should_end = True
+        self.alive = False
