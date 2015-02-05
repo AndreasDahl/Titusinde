@@ -1,9 +1,11 @@
 __author__ = 'Andreas Dahl'
 
 
-class strategy(object):
+class Strategy(object):
     """
-    Interface for a titusinde interface
+    Interface for a titusinde strategy
     """
 
-    pass # TODO
+    # noinspection PyMethodMayBeStatic
+    def handle_roll(self, game_round):
+        raise NotImplemented

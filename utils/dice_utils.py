@@ -41,6 +41,27 @@ def calculate_score(n, combo_score, single_score=0):
     return score
 
 
+def get_score(digit, n):
+    """
+    Get the score of n times digit dices
+    :param digit:  Which side of the dice.
+    :param n:  How many of those.
+    :return:  The score calculated.
+    """
+    if digit == 1:
+        return calculate_score(n, 1000, 100)
+    elif digit == 2:
+        return calculate_score(n, 200)
+    elif digit == 3:
+        return calculate_score(n, 300)
+    elif digit == 4:
+        return calculate_score(n, 400)
+    elif digit == 5:
+        return calculate_score(n, 500, 50)
+    elif digit == 6:
+        return calculate_score(n, 600)
+
+
 def all_rolls():
     """
     Return a list of lists with all the possible rolls for six-sided dices.
