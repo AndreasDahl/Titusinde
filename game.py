@@ -1,19 +1,43 @@
+import math
+from game_round import GameRound
+from strategy.strategy_dice_count import StrategyDiceCount
+
 __author__ = 'Andreas Dahl'
 
-from utils import dice_utils
-from utils.math_utils import *
 
 # TODO: Game
+class Game(object):
+    score = 0
+    rounds = 0
+    current_round = None
 
+    def start(self):
+        self.new_round()
 
-r = dice_utils.random_roll(6)
-print(r)
-print(dice_utils.take_all(r))
+    def new_round(self):
+        self.rounds += 1
+        self.current_round = GameRound(StrategyDiceCount(), self)
+        print "Starting round", self.rounds
 
-ar = dice_utils.all_rolls()
-scores = []
-for roll in ar:
-    scores.append(dice_utils.take_all(dice_utils))
+        self.current_round.play()
 
-print(sum(scores)/len(scores))
-print(median(scores))
+    def end_round(self, score):
+        self.score += score
+        print "Round", self.rounds, "ended with", score, "points. Player now has", self.score, "points"
+
+        if self.score >= 10000:
+            self.end_game()
+        else:
+            self.new_round()
+
+    def end_game(self):
+        print "The player won after", self.rounds, "with", self.score, "points"
+
+rs = []
+for i in range(0, 1000):
+    g = Game()
+    g.start()
+    rs.append(g.rounds)
+
+sum = math.fsum(rs)
+print "Average Rounds:", sum / len(rs)

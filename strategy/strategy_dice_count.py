@@ -13,7 +13,7 @@ class StrategyDiceCount(Strategy):
         :return:  Points
         """
         hist = [0] * 6
-        for dice in game_round.roll:
+        for dice in game_round.current_roll:
             hist[dice - 1] += 1
         # Check for stair
         if hist.count(1) == len(hist):
@@ -25,5 +25,7 @@ class StrategyDiceCount(Strategy):
         score = 0
         for i in range(len(hist)):
             score += get_score(i+1, hist[i])
+
+        game_round.hold()
 
         return score

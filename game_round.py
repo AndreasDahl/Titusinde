@@ -10,6 +10,7 @@ class GameRound(object):
 
     def __init__(self, strategy, game):
         self.current_roll = random_roll(6)
+        print "Roll:", self.current_roll
         self.strategy = strategy
         self.game = game
 
@@ -18,12 +19,17 @@ class GameRound(object):
 
     def play(self):
         score = self.strategy.handle_roll(self)
+        self.bank += score
+        print "Strategy took", score, "points. Now ", self.bank, "in bank."
 
         if score == 0:
-            self.end_round()
+            self.game.end_round(0)
+        elif self.should_end:
+            self.game.end_round(self.bank)
+        else:
+            self.current_roll = random_roll(6)  # TODO
+            print "Used all dices reroll", self.current_roll
+            self.play()
 
-    def end_round(self):
-        pass
-
-    def lose_round(self):
-        pass
+    def hold(self):
+        self.should_end = True
